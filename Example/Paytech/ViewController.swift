@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, PaytechViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +19,21 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    @IBAction func pay(_ sender: Any) {
+        
+        let paytechController = PaytechViewController()
+        paytechController.delegate = self
+        paytechController.requestTokenUrl = URL(string: "https://sample.paytech.sn/paiement.php")
+        paytechController.params["item_id"] = "567"
+        paytechController.send()
+        
+        present(paytechController, animated: true, completion: nil)
+        
+    }
+    
+    
+    func paytech(_ controller: PaytechViewController, didFinishWithStatus status: PaymentStatus) {
+        print(status)
+    }
 }
 

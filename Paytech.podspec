@@ -9,26 +9,25 @@
 Pod::Spec.new do |s|
   s.name             = 'Paytech'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of Paytech.'
-
+  s.summary          = 'Paytech Payment'
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = 'PayTech propose sa plateforme sécurisée de paiement en ligne pour faciliter les transactions entre les professionnels et leurs clients, avec ou sans site Web.'
 
-  s.homepage         = 'https://github.com/primotera/Paytech'
+
+  s.homepage         = 'https://github.com/primotera/Paytech-IOS'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'primotera' => 'adiop600@gmail.com' }
-  s.source           = { :git => 'https://github.com/primotera/Paytech.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/primotera/Paytech-IOS.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
+  s.swift_versions = '4.0'
 
   s.source_files = 'Paytech/Classes/**/*'
   

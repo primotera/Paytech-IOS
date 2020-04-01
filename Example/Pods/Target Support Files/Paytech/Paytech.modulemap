@@ -1,0 +1,6 @@
+framework module Paytech {
+  umbrella header "Paytech-umbrella.h"
+
+  export *
+  module * { export * }
+}
