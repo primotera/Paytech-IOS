@@ -16,6 +16,7 @@ class ViewController: UIViewController, PaytechViewControllerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @IBOutlet weak var statusLabel: UILabel!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -42,6 +43,8 @@ class ViewController: UIViewController, PaytechViewControllerDelegate {
         case .success:
             print("Opération réussie")
         }
+        statusLabel.text = "\(status)"
     }
+    
 }
 

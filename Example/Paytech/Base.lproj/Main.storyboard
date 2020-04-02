@@ -26,17 +26,36 @@
                                     <action selector="pay:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="olq-es-xzG"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paiement Paytech" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EY3-nD-mOP">
+                                <rect key="frame" x="43" y="100" width="289.5" height="45.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                <color key="textColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seE-w7-eGJ">
+                                <rect key="frame" x="187.5" y="153" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.26898538652889081" green="0.29084414622868315" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="FN6-7d-Y1f" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Bhe-Yf-9AL"/>
+                            <constraint firstItem="seE-w7-eGJ" firstAttribute="centerX" secondItem="EY3-nD-mOP" secondAttribute="centerX" id="Fqs-UN-a9E"/>
                             <constraint firstItem="FN6-7d-Y1f" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="I4b-Sq-1kE"/>
+                            <constraint firstItem="seE-w7-eGJ" firstAttribute="top" secondItem="EY3-nD-mOP" secondAttribute="bottom" constant="7.5" id="JUE-zS-oKp"/>
+                            <constraint firstItem="EY3-nD-mOP" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Yee-FY-TtR"/>
+                            <constraint firstItem="EY3-nD-mOP" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="aE5-Th-OiQ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="seE-w7-eGJ" id="4ur-SX-DG8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="134"/>
+            <point key="canvasLocation" x="-8.8000000000000007" y="129.98500749625188"/>
         </scene>
     </scenes>
 </document>
