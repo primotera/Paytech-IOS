@@ -20,7 +20,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     private let SUCCESS_URL = "https://paytech.sn/mobile/success"
     private var isFetching = false
     private var webView: WKWebView! = nil
-    
+    private var currentCallBack: ((PaymentStatus) -> Void)?
     
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -40,6 +40,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     
     public func send(withCallback callback: ((PaymentStatus) -> Void)? = nil) {
         if let requestTokenUrl = requestTokenUrl {
+            self.currentCallBack = callback
             params["is_mobile"] =  "yes"
             var request = URLRequest(url: requestTokenUrl)
             request.httpMethod = "POST"
@@ -105,10 +106,11 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     }
     
     
-    private func responseWith(status: PaymentStatus, _ callback: ((PaymentStatus) -> Void)? = nil) {
+    private func responseWith(status: PaymentStatus) {
         self.delegate?.paytech(self, didFinishWithStatus: status)
-        callback?(status)
+        self.currentCallBack?(status)
         self.dismiss(animated: true, completion: nil)
+        self.currentCallBack = nil
     }
     
 }
