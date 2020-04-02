@@ -22,7 +22,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     private var webView: WKWebView! = nil
     
     
-    public init(withRequestTokenUrl requestTokenUrl: URL) {
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.webView = WKWebView(frame: self.view.frame)
         self.view.addSubview(self.webView)
@@ -31,7 +31,6 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
         self.webView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         self.webView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         self.webView.navigationDelegate = self
-        self.requestTokenUrl = requestTokenUrl
     }
     
     override public func viewDidLoad() {
@@ -39,7 +38,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     }
     
     
-    public func send() {
+    public func send(withCallback callback: ((PaymentStatus) -> Void)? = nil) {
         if let requestTokenUrl = requestTokenUrl {
             params["is_mobile"] =  "yes"
             var request = URLRequest(url: requestTokenUrl)
@@ -93,10 +92,6 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        
-        
-        print("Navigation:  \(navigationAction.request.url?.absoluteString ?? "")")
-        
         if navigationAction.request.url?.absoluteString ==  CANCEL_URL {
             
             self.responseWith(status: .cancel)
@@ -110,8 +105,9 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     }
     
     
-    private func responseWith(status: PaymentStatus) {
+    private func responseWith(status: PaymentStatus, _ callback: ((PaymentStatus) -> Void)? = nil) {
         self.delegate?.paytech(self, didFinishWithStatus: status)
+        callback?(status)
         self.dismiss(animated: true, completion: nil)
     }
     
