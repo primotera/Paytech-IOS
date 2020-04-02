@@ -1,3 +1,4 @@
+
 //
 //  PaytechViewController.swift
 //  Paytech_Example
@@ -9,23 +10,23 @@
 import UIKit
 import WebKit
 
-class PaytechViewController: UIViewController {
+public class PaytechViewController: UIViewController , WKNavigationDelegate{
     
-    var requestTokenUrl: URL?
-    weak var delegate: PaytechViewControllerDelegate?
+    public var requestTokenUrl: URL?
+    public weak var delegate: PaytechViewControllerDelegate?
     var tokenUrl: URL?
-    var params: [String: Any] = [:]
+    public var params: [String: Any] = [:]
     private let CANCEL_URL = "https://paytech.sn/mobile/cancel"
     private let SUCCESS_URL = "https://paytech.sn/mobile/success"
     private var isFetching = false
     private var webView: WKWebView! = nil
     
     
-    init() {
+    public init() {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.webView = WKWebView(frame: self.view.frame)
         self.view.addSubview(self.webView)
@@ -37,7 +38,7 @@ class PaytechViewController: UIViewController {
     }
     
     
-    func send() {
+    public func send() {
         if let requestTokenUrl = requestTokenUrl {
             params["is_mobile"] =  "yes"
             var request = URLRequest(url: requestTokenUrl)
@@ -47,13 +48,12 @@ class PaytechViewController: UIViewController {
             let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
                 
                 guard let data = data else {
-                    self.delegate?.paytech(self, didFinishWithStatus: .fail)
+                    self.responseWith(status: .fail)
                     return
                 }
                 guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any]
                     else {
-                        self.dismiss(animated: true, completion: nil)
-                        self.delegate?.paytech(self, didFinishWithStatus: .fail)
+                        self.responseWith(status: .fail)
                         return
                 }
                 
@@ -61,14 +61,13 @@ class PaytechViewController: UIViewController {
                     
                     let request = URLRequest(url: tokenUrl)
                     DispatchQueue.main.async {
-
+                        
                         self.webView.load(request)
                         
                     }
                     
                 } else {
-                    self.dismiss(animated: true, completion: nil)
-                    self.delegate?.paytech(self, didFinishWithStatus: .fail)
+                    self.responseWith(status: .fail)
                     return
                 }
                 
@@ -76,8 +75,7 @@ class PaytechViewController: UIViewController {
             
             task.resume()
         } else {
-            self.dismiss(animated: true, completion: nil)
-            self.delegate?.paytech(self, didFinishWithStatus: .fail)
+            self.responseWith(status: .fail)
         }
         
         
@@ -90,25 +88,9 @@ class PaytechViewController: UIViewController {
     }
     
     
-}
-
-
-protocol PaytechViewControllerDelegate: class {
-    func paytech(_ controller: PaytechViewController, didFinishWithStatus status: PaymentStatus)
-}
-
-
-
-enum PaymentStatus {
-    case success
-    case fail
-    case cancel
-}
-
-
-extension PaytechViewController: WKNavigationDelegate {
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    
+    private func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         
         
@@ -116,21 +98,37 @@ extension PaytechViewController: WKNavigationDelegate {
         
         if navigationAction.request.url?.absoluteString ==  CANCEL_URL {
             
-            self.dismiss(animated: true, completion: nil)
-            self.delegate?.paytech(self, didFinishWithStatus: .cancel)
+            self.responseWith(status: .cancel)
             
         } else if navigationAction.request.url?.absoluteString ==  SUCCESS_URL {
-            
-            self.dismiss(animated: true, completion: nil)
-            self.delegate?.paytech(self, didFinishWithStatus: .success)
+            self.responseWith(status: .success)
             
         }
-        
         
         decisionHandler(.allow)
     }
     
+    
+    private func responseWith(status: PaymentStatus) {
+        self.delegate?.paytech(self, didFinishWithStatus: status)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
+
+
+public protocol PaytechViewControllerDelegate: class {
+    func paytech(_ controller: PaytechViewController, didFinishWithStatus status: PaymentStatus)
+}
+
+
+
+public enum PaymentStatus {
+    case success
+    case fail
+    case cancel
+}
+
 
 
 extension Dictionary {
@@ -149,7 +147,7 @@ extension CharacterSet {
     static let urlQueryValueAllowed: CharacterSet = {
         let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
         let subDelimitersToEncode = "!$&'()*+,;="
-
+        
         var allowed = CharacterSet.urlQueryAllowed
         allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
         return allowed

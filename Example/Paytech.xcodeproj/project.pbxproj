@@ -15,7 +15,6 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		A72B4649B0D3EE087D309409 /* Pods_Paytech_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D6BCAAABE420499D2E43CEC /* Pods_Paytech_Tests.framework */; };
 		D549047801694F5ACDAAE24B /* Pods_Paytech_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1087FA5BD0092678D2D33B /* Pods_Paytech_Example.framework */; };
-		FA9CF72E2434D3AF001A3088 /* PaytechViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9CF72D2434D3AF001A3088 /* PaytechViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +46,6 @@
 		BC1087FA5BD0092678D2D33B /* Pods_Paytech_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Paytech_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C588BD4691196A21D9B25ADF /* Paytech.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Paytech.podspec; path = ../Paytech.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C7A5E553175B5F9368F79988 /* Pods-Paytech_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paytech_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Paytech_Tests/Pods-Paytech_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		FA9CF72D2434D3AF001A3088 /* PaytechViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaytechViewController.swift; sourceTree = "<group>"; };
 		FFC03783AB25469F304E50EB /* Pods-Paytech_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paytech_Tests.release.xcconfig"; path = "Target Support Files/Pods-Paytech_Tests/Pods-Paytech_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,7 +81,6 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				FA9CF72F24350880001A3088 /* Classes */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Paytech */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -160,14 +157,6 @@
 				FFC03783AB25469F304E50EB /* Pods-Paytech_Tests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		FA9CF72F24350880001A3088 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				FA9CF72D2434D3AF001A3088 /* PaytechViewController.swift */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,7 +358,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				FA9CF72E2434D3AF001A3088 /* PaytechViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,6 +506,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4AS8834PG9;
 				INFOPLIST_FILE = Paytech/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "sn.intech.demo.Paytech-Example";
@@ -534,6 +523,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4AS8834PG9;
 				INFOPLIST_FILE = Paytech/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "sn.intech.demo.Paytech-Example";

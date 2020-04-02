@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Paytech
 
 class ViewController: UIViewController, PaytechViewControllerDelegate {
 
@@ -33,7 +34,15 @@ class ViewController: UIViewController, PaytechViewControllerDelegate {
     
     
     func paytech(_ controller: PaytechViewController, didFinishWithStatus status: PaymentStatus) {
-        print(status)
+        switch status {
+        case .cancel:
+            print("Opération annulée")
+        case .fail:
+            print("Opération échouée")
+        case .success:
+            print("Opération réussie")
+        }
+        dismiss(animated: true, completion: nil)
     }
 }
 
