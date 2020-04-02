@@ -10,7 +10,7 @@
 import UIKit
 import WebKit
 
-public class PaytechViewController: UIViewController , WKNavigationDelegate{
+public class PaytechViewController: UIViewController , WKNavigationDelegate {
     
     public var requestTokenUrl: URL?
     public weak var delegate: PaytechViewControllerDelegate?
@@ -22,12 +22,8 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate{
     private var webView: WKWebView! = nil
     
     
-    public init() {
+    public init(withRequestTokenUrl requestTokenUrl: URL) {
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
         self.webView = WKWebView(frame: self.view.frame)
         self.view.addSubview(self.webView)
         self.webView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
@@ -35,6 +31,11 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate{
         self.webView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         self.webView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         self.webView.navigationDelegate = self
+        self.requestTokenUrl = requestTokenUrl
+    }
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
     }
     
     
