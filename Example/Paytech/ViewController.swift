@@ -42,7 +42,6 @@ class ViewController: UIViewController, PaytechViewControllerDelegate {
         case .success:
             print("Opération réussie")
         }
-        dismiss(animated: true, completion: nil)
     }
 }
 
