@@ -13,14 +13,20 @@ import WebKit
 public class PaytechViewController: UIViewController , WKNavigationDelegate {
     
     public var requestTokenUrl: URL?
-    public weak var delegate: PaytechViewControllerDelegate?
+    public var delegate: PaytechViewControllerDelegate?
     var tokenUrl: URL?
     public var params: [String: Any] = [:]
     private let CANCEL_URL = "https://paytech.sn/mobile/cancel"
     private let SUCCESS_URL = "https://paytech.sn/mobile/success"
-    private var isFetching = false
+    private var _isPayementProcessing = false
+    var isPaymentProcessing: Bool  {
+        get {
+            return self._isPayementProcessing
+        }
+    }
     private var webView: WKWebView! = nil
     private var currentCallBack: ((PaymentStatus) -> Void)?
+    
     
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -31,12 +37,21 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
         self.webView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         self.webView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         self.webView.navigationDelegate = self
+        self.webView.configuration.userContentController.add(self, name: WebEvent.openDial.rawValue)
+        self.webView.configuration.userContentController.add(self, name: WebEvent.onPaymentStart.rawValue)
+        self.webView.configuration.userContentController.add(self, name: WebEvent.openUrl.rawValue)
+        print("PaytechViewController is On")
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    public override func viewDidDisappear(_ animated: Bool) {
+        if !isPaymentProcessing {
+            self.responseWith(status: .cancel)
+        }
+    }
     
     public func send(withCallback callback: ((PaymentStatus) -> Void)? = nil) {
         if let requestTokenUrl = requestTokenUrl {
@@ -73,7 +88,6 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
                 }
                 
             }
-            
             task.resume()
         } else {
             self.responseWith(status: .fail)
@@ -82,14 +96,19 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
         
     }
     
-    
+    enum WebEvent: String {
+        case onPaymentStart
+        case openDial
+        case openUrl
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    
-    
+    deinit {
+        print("PaytechController is off")
+    }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
@@ -109,6 +128,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     private func responseWith(status: PaymentStatus) {
         self.delegate?.paytech(self, didFinishWithStatus: status)
         self.currentCallBack?(status)
+        self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
         self.currentCallBack = nil
     }
@@ -118,8 +138,11 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
 
 public protocol PaytechViewControllerDelegate: class {
     func paytech(_ controller: PaytechViewController, didFinishWithStatus status: PaymentStatus)
+    func paytech(_ controller: PaytechViewController, isPaymentProcessing: Bool)
 }
-
+public extension PaytechViewControllerDelegate {
+    func paytech(_ controller: PaytechViewController, isPaymentProcessing: Bool) {}
+}
 
 
 public enum PaymentStatus {
@@ -151,4 +174,33 @@ extension CharacterSet {
         allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
         return allowed
     }()
+}
+
+
+extension PaytechViewController: WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+        if let event = WebEvent(rawValue: message.name) {
+            switch event {
+                
+            case .onPaymentStart:
+                _isPayementProcessing = true
+                delegate?.paytech(self, isPaymentProcessing: _isPayementProcessing)
+            case .openDial:
+                let phone = "tel://\((message.body as? String) ?? "")"
+                if let url = URL(string: (phone).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") {
+                    UIApplication.shared.openURL(url)
+                } else {
+                    print("PaytechViewController can't open URL ", message.body)
+                }
+                
+            case .openUrl:
+                if let url = URL(string: ((message.body as? String) ?? "").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") {
+                    UIApplication.shared.openURL(url)
+                } else {
+                    print("PaytechViewController can't open URL ", message.body)
+                }
+            }
+        }
+    }
 }

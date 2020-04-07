@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bs3-2Q-3yq">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -20,42 +20,83 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FN6-7d-Y1f">
-                                <rect key="frame" x="111.5" y="318.5" width="152" height="30"/>
+                                <rect key="frame" x="111.5" y="536" width="152" height="30"/>
                                 <state key="normal" title="Effectuer un paiement"/>
                                 <connections>
                                     <action selector="pay:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="olq-es-xzG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paiement Paytech" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EY3-nD-mOP">
-                                <rect key="frame" x="43" y="100" width="289.5" height="45.5"/>
+                                <rect key="frame" x="43" y="144" width="289.5" height="45.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                 <color key="textColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seE-w7-eGJ">
-                                <rect key="frame" x="187.5" y="153" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.26898538652889081" green="0.29084414622868315" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="1of-0e-GKo">
+                                <rect key="frame" x="110.5" y="197" width="154" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seE-w7-eGJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.26898538652889081" green="0.29084414622868315" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ILk-Cg-nuh">
+                                        <rect key="frame" x="134" y="0.0" width="20" height="50"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                            </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dD8-SK-OxU">
+                                <rect key="frame" x="83" y="318" width="209" height="32"/>
+                                <segments>
+                                    <segment title="En Popup"/>
+                                    <segment title="En Navigation"/>
+                                </segments>
+                                <color key="selectedSegmentTintColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dD8-SK-OxU" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="7aw-vU-OXI"/>
                             <constraint firstItem="FN6-7d-Y1f" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Bhe-Yf-9AL"/>
-                            <constraint firstItem="seE-w7-eGJ" firstAttribute="centerX" secondItem="EY3-nD-mOP" secondAttribute="centerX" id="Fqs-UN-a9E"/>
-                            <constraint firstItem="FN6-7d-Y1f" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="I4b-Sq-1kE"/>
-                            <constraint firstItem="seE-w7-eGJ" firstAttribute="top" secondItem="EY3-nD-mOP" secondAttribute="bottom" constant="7.5" id="JUE-zS-oKp"/>
+                            <constraint firstItem="dD8-SK-OxU" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="DIm-AO-jbx"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="FN6-7d-Y1f" secondAttribute="bottom" constant="101" id="Put-Wf-JMm"/>
+                            <constraint firstItem="1of-0e-GKo" firstAttribute="top" secondItem="EY3-nD-mOP" secondAttribute="bottom" constant="7.5" id="UWe-e6-x8M"/>
                             <constraint firstItem="EY3-nD-mOP" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Yee-FY-TtR"/>
                             <constraint firstItem="EY3-nD-mOP" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="aE5-Th-OiQ"/>
+                            <constraint firstItem="1of-0e-GKo" firstAttribute="centerX" secondItem="EY3-nD-mOP" secondAttribute="centerX" id="ier-q4-pAt"/>
+                            <constraint firstItem="dD8-SK-OxU" firstAttribute="centerX" secondItem="FN6-7d-Y1f" secondAttribute="centerX" id="jpV-Wb-MxX"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="YTu-Xc-1Wu"/>
                     <connections>
+                        <outlet property="paymentIndicator" destination="ILk-Cg-nuh" id="A7k-eX-mCy"/>
+                        <outlet property="paymentTypeSegmentControl" destination="dD8-SK-OxU" id="Z6d-8d-xQ4"/>
                         <outlet property="statusLabel" destination="seE-w7-eGJ" id="4ur-SX-DG8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-8.8000000000000007" y="129.98500749625188"/>
+            <point key="canvasLocation" x="804" y="129.98500749625188"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ein-ti-yiA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bs3-2Q-3yq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bhf-ld-wSz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="QpQ-yL-Oyc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yIO-mY-ec6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-135.19999999999999" y="129.98500749625188"/>
         </scene>
     </scenes>
 </document>

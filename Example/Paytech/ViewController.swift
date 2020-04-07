@@ -10,17 +10,40 @@ import UIKit
 import Paytech
 
 class ViewController: UIViewController, PaytechViewControllerDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        navigationController?.title = "Paytech Example"
+        //navigationController?.isNavigationBarHidden = true
     }
 
     @IBOutlet weak var statusLabel: UILabel!
+    
+    @IBOutlet weak var paymentIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var paymentTypeSegmentControl: UISegmentedControl!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    var isPaymentLoading: Bool {
+        set {
+            if newValue {
+                paymentIndicator.startAnimating()
+                statusLabel.text = "En Cours..."
+            } else {
+                paymentIndicator.stopAnimating()
+                statusLabel.text = ""
+            }
+        }
+        
+        get {
+            return paymentIndicator.isAnimating
+        }
+        
+    }
+    
+    
     @IBAction func pay(_ sender: Any) {
         
         let paytechController = PaytechViewController()
@@ -29,7 +52,12 @@ class ViewController: UIViewController, PaytechViewControllerDelegate {
         paytechController.params["item_id"] = "567"
         paytechController.send()
         
-        present(paytechController, animated: true, completion: nil)
+        if paymentTypeSegmentControl.selectedSegmentIndex == 0 {
+            present(paytechController, animated: true, completion: nil)
+        } else {
+            navigationController?.pushViewController(paytechController, animated: true)
+        }
+        
         
     }
     
@@ -43,8 +71,16 @@ class ViewController: UIViewController, PaytechViewControllerDelegate {
         case .success:
             print("Opération réussie")
         }
+        isPaymentLoading = false
         statusLabel.text = "\(status)"
     }
     
+    
+    
+    func paytech(_ controller: PaytechViewController, isPaymentProcessing: Bool) {
+        isPaymentLoading = isPaymentProcessing
+    }
+    
 }
+
 
