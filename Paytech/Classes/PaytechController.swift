@@ -10,22 +10,22 @@
 import UIKit
 import WebKit
 
-public class PaytechViewController: UIViewController , WKNavigationDelegate {
+@objc public class PaytechViewController: UIViewController , WKNavigationDelegate {
     
-    public var requestTokenUrl: URL?
+    @objc public var requestTokenUrl: URL?
     public var delegate: PaytechViewControllerDelegate?
     var tokenUrl: URL?
-    public var params: [String: Any] = [:]
+    @objc public var params: NSMutableDictionary = NSMutableDictionary()
     private let CANCEL_URL = "https://paytech.sn/mobile/cancel"
     private let SUCCESS_URL = "https://paytech.sn/mobile/success"
     private var _isPayementProcessing = false
-    var isPaymentProcessing: Bool  {
+    @objc var isPaymentProcessing: Bool  {
         get {
             return self._isPayementProcessing
         }
     }
     private var webView: WKWebView! = nil
-    private var currentCallBack: ((PaymentStatus) -> Void)?
+    private var currentCallBack: ((String) -> Void)?
     
     
     public init() {
@@ -53,7 +53,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
         }
     }
     
-    public func send(withCallback callback: ((PaymentStatus) -> Void)? = nil) {
+    @objc public func send(withCallback callback: ((String) -> Void)? = nil) {
         if let requestTokenUrl = requestTokenUrl {
             self.currentCallBack = callback
             params["is_mobile"] =  "yes"
@@ -83,7 +83,10 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
                     }
                     
                 } else {
-                    self.responseWith(status: .fail)
+                    
+                    DispatchQueue.main.async {
+                        self.responseWith(status: .fail)
+                    }
                     return
                 }
                 
@@ -127,7 +130,7 @@ public class PaytechViewController: UIViewController , WKNavigationDelegate {
     
     private func responseWith(status: PaymentStatus) {
         self.delegate?.paytech(self, didFinishWithStatus: status)
-        self.currentCallBack?(status)
+        self.currentCallBack?(status.rawValue)
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
         self.currentCallBack = nil
@@ -145,7 +148,7 @@ public extension PaytechViewControllerDelegate {
 }
 
 
-public enum PaymentStatus {
+public enum PaymentStatus: String {
     case success
     case fail
     case cancel
@@ -153,7 +156,7 @@ public enum PaymentStatus {
 
 
 
-extension Dictionary {
+extension NSMutableDictionary {
     func percentEncoded() -> Data? {
         return map { key, value in
             let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
